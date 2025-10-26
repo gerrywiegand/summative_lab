@@ -65,8 +65,3 @@ def count_sentences(text):
             i += 1
 
     return count
-
-
-print(count_specific_word("text", sample_text))
-print(identify_most_common_word(sample_text))
-print(calculate_average_word_length(sample_text))
