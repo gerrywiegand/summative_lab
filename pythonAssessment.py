@@ -31,10 +31,11 @@ def identify_most_common_word(text):
 def calculate_average_word_length(text):
     u.validate_input(text)
     words = u.tokenize_text(text)
-    if not words:
-        return 0.0
-    total_length = sum(len(word) for word in words)
-    return total_length / len(words)
+    total_length = 0
+    for w in words:
+        total_length += len(w)
+
+    return total_length / len(words) if words else 0.0
 
 
 def count_paragraphs(text):
@@ -45,9 +46,25 @@ def count_paragraphs(text):
 
 def count_sentences(text):
     u.validate_input(text)
-    sentences = re.split(r"[.!?]+", text.strip())
-    sentences = [s for s in sentences if s.strip()]
-    return len(sentences)
+    s = text.strip()
+    i = 0
+    count = 0
+    in_sentence = False
+    while i < len(s):
+        ch = s[i]
+        if ch.isalnum():
+            in_sentence = True
+            i += 1
+        elif ch in ".!?":
+            if in_sentence:
+                count += 1
+                in_sentence = False
+            while i < len(s) and s[i] in ".!?":
+                i += 1
+        else:
+            i += 1
+
+    return count
 
 
 print(count_specific_word("text", sample_text))
