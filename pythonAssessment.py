@@ -1,21 +1,55 @@
 #!/usr/bin/env python3
+
 import re
 from collections import Counter
-from pathlib import Path
-import summative_lab.utils as utils
 
-def count_specific_word(search,article):
+import utils as u
 
-
-
-def identify_most_common_word(str):
-
-def calculate_average_word_length(str):
-
-def count_paragraphs(str):
-
-def count_sentences(str):
+sample_text = "This is a sample text. This text is for testing purposes.\n\nIt contains multiple paragraphs, sentences, and words."
 
 
+def count_specific_word(word, article):
+    u.validate_input(article)
+    u.validate_input(word)
+    words = re.findall(r"\b\w+\b", article.lower())
+    counts = Counter(words)
+    return counts[word.lower()]
 
 
+def identify_most_common_word(text):
+    u.validate_input(text)
+    words = u.tokenize_text(text)
+    counts = Counter(words)
+    max_count = max(counts.values())
+    most_common = None
+    for word in words:
+        if counts[word] == max_count:
+            most_common = word
+    return most_common
+
+
+def calculate_average_word_length(text):
+    u.validate_input(text)
+    words = u.tokenize_text(text)
+    if not words:
+        return 0.0
+    total_length = sum(len(word) for word in words)
+    return total_length / len(words)
+
+
+def count_paragraphs(text):
+    u.validate_input(text)
+    paragraphs = [p for p in text.split("\n\n") if p.strip()]
+    return len(paragraphs)
+
+
+def count_sentences(text):
+    u.validate_input(text)
+    sentences = re.split(r"[.!?]+", text.strip())
+    sentences = [s for s in sentences if s.strip()]
+    return len(sentences)
+
+
+print(count_specific_word("text", sample_text))
+print(identify_most_common_word(sample_text))
+print(calculate_average_word_length(sample_text))

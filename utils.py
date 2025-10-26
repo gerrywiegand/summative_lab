@@ -8,5 +8,5 @@ def validate_input(value):
         raise ValueError("Input string cannot be empty")
 
 
-def toekenize_text(text):
+def tokenize_text(text):
     return re.findall(r"[A-Za-z0-9]+", text.lower())
